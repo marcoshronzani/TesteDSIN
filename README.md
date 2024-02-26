@@ -4,7 +4,7 @@
 - Python 3.12.0
 
 ## Setup
-
+### Windows
 ``` 
 git clone https://github.com/marcoshronzani/TesteDSIN.git
 cd TesteDSIN
@@ -16,7 +16,18 @@ python manage.py migrate
 python manage.py loaddata initial_data.json
 python manage.py runserver
 ```
-
+### Mac/Linux
+``` 
+git clone https://github.com/marcoshronzani/TesteDSIN.git
+cd TesteDSIN
+cp contrib/env-sample .env
+python -m venv .venv
+.venv\scripts\activate
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py loaddata initial_data.json
+python manage.py runserver
+```
 ## Acesso ao Sistema
 
 O setup acima já cria e popula o banco de dados com três usuários, alguns agendamentos e serviços.
