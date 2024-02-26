@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block 'body' %}
+
+<div class="container-fluid">
+    <div style="text-align: center">
+        <br>
+        {% if messages %}
+          {% for message in messages %}
+              <div class="alert {{message.tags}}">{{message}}</div>
+          {% endfor %}
+        {% endif %}
+
+{% endblock %}

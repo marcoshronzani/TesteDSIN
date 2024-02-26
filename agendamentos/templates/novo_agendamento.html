@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block 'title' %} Novo Agendamento {% endblock %}
+
+{% block 'body' %}
+
+<div class="container">
+    <div style="text-align: center">
+        <br>
+
+        <h2>Cadastrar Agendamento</h2>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert {{message.tags}}">{{message}}</div>
+            {% endfor %}
+        {% endif %}
+
+    </div>
+    <br>
+    <form action="{% url 'novo_agendamento' %}" method="POST" >{% csrf_token %}
+        <label>Data do Agendamento:</label>
+        <input style="width: 30%" type="datetime-local" class="form-control" name="data">
+        <br>
+        <label>Serviço:</label>
+        <br>
+        <select name="servicos" multiple class="form-select">
+            {% for servico in servicos %}
+                <option value="{{ servico.id}}">{{ servico.descricao}} - R${{ servico.valor }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <br>
+        <input class="btn btn-success btn-sm" type="Submit" value="Salvar">&nbsp&nbsp&nbsp
+        <a href="{% url 'agendamentos' %}" class="btn btn-primary btn-sm">Cancelar</a>
+    </form>
+</div>
+
+{% endblock %}

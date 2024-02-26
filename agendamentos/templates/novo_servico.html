@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block 'title' %} Novo Servico {% endblock %}
+
+{% block 'body' %}
+
+<div class="container">
+    <div style="text-align: center">
+        <br>
+
+        <h2>Cadastrar Serviço</h2>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert {{message.tags}}">{{message}}</div>
+            {% endfor %}
+        {% endif %}
+
+    </div>
+    <br>
+    <form action="{% url 'novo_servico' %}" method="POST" >{% csrf_token %}
+        <label>Descrição:</label>
+        <input style="width: 50%" type="text" name="descricao" class="form-control" placeholder="Digite a descrição">
+        <br>
+        <label>Valor:</label>
+        <input style="width: 10%" type="text" name="valor" class="form-control">
+        <br>
+        <br>
+        <input class="btn btn-success btn-sm" type="Submit" value="Salvar">&nbsp&nbsp&nbsp
+        <a href="{% url 'servicos' %}" class="btn btn-primary btn-sm">Cancelar</a>
+    </form>
+</div>
+
+{% endblock %}

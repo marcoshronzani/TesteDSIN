@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block 'head' %}
+    <link href="{% static 'css/usuario.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block 'body' %}
+
+    <div class="container-fluid bg-inscricao">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="box-form">
+                    <h3>CADASTRO</h3>
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert {{ message.tags}}">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
+                    <hr style="border-color: #7E7B7C">
+                
+                    <form action="{% url 'cadastro' %}" method="POST"> {% csrf_token %}
+                        <label>Nome:</label> 
+                        <input type="text" class="form-control" placeholder="Nome..." name="nome">
+                        <br>
+                        <label>E-mail:</label>
+                        <input type="email" class="form-control" placeholder="E-mail..." name="email">
+                        <br>
+                        <div class="row">
+                            <div class="col-md">
+                                <label>Senha:</label>
+                                <input type="password" class="form-control" placeholder="Senha..." name="senha">
+                            </div>
+                
+                            <div class="col-md">
+                                <label>Confirmar senha:</label>
+                                <input type="password" class="form-control" placeholder="Confirmar senha..." name="confirmar_senha">
+                            </div>
+                        </div>
+                        <a href="{% url 'login' %}" class="link">Já possuo uma conta</a>
+                        <br>
+                        <br>
+                        <input type="submit" value="CADASTRAR" class="btn btn-success">
+                    </form>
+                </div>
+
+            </div>
+            <div class="col-md bg-img">
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

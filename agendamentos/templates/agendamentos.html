@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block 'body' %}
+
+<div class="container-fluid">
+    <div style="text-align: center">
+        <br>
+
+        <h2>Agendamentos</h2>
+
+        {% if messages %}
+          {% for message in messages %}
+              <div class="alert {{message.tags}}">{{message}}</div>
+          {% endfor %}
+        {% endif %}
+      <br>
+      <br>
+      <a href="{% url 'novo_agendamento' %}" type="button" class="btn btn-success">Cadastrar Agendamento</a>
+      <br>
+      <br>
+    </div>
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-6">
+        <form method="GET">
+          <label for="data_inicio">Data de Início:</label>
+          <input type="date" id="data_inicio" name="data_inicio">
+          
+          <label for="data_fim">Data de Fim:</label>
+          <input type="date" id="data_fim" name="data_fim">
+          
+          <button type="submit">Filtrar</button>
+        </form>
+        
+      </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+        <table class="table table-striped table-sm">
+          <thead>
+            <tr>
+              <th scope="col">Data</th>
+              <th scope="col">Status</th>
+              <th scope="col">Serviços</th>
+              {% if user.is_superuser %}
+                <th scope="col">Cliente</th>
+              {% endif %}
+              <th scope="col">  </th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for agendamento in agendamentos %}
+                <tr>
+                  <td>{{ agendamento.data_agendamento }}</td>
+                  <td>{{ agendamento.get_status_display }}</td>
+                  <td>
+                    {% for servico in agendamento.servico.all %}
+                    <li>{{ servico.descricao }} - R${{ servico.valor }}</li>
+                    {% endfor %}
+                </td>
+                {% if user.is_superuser %}
+                  <td>{{ agendamento.usuario.first_name }}</td>
+                  <td><a href="{% url 'editar_agendamento' agendamento.id %}" type="button" class="btn btn-info btn-sm">Editar/Excluir</a></td>
+                {% else %}
+                <td><a href="{% url 'editar_agendamento' agendamento.id %}" type="button" class="btn btn-info btn-sm">Editar</a></td>
+                {% endif %}
+                </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

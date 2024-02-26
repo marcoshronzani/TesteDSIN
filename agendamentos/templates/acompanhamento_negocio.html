@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block 'body' %}
+
+<div class="container">
+    <div style="text-align: center">
+        <br>
+
+        <h2>Acompanhamento do Negócio</h2>
+
+        {% if messages %}
+          {% for message in messages %}
+              <div class="alert {{message.tags}}">{{message}}</div>
+          {% endfor %}
+        {% endif %}
+      <br>
+      <br>
+    </div>
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-8">
+        <form method="GET">
+          <label for="data_inicio">Data de Início:</label>
+          <input type="date" id="data_inicio" name="data_inicio">
+          
+          <label for="data_fim">Data de Fim:</label>
+          <input type="date" id="data_fim" name="data_fim">
+          
+          <button type="submit">Filtrar</button>
+        </form>
+      </div>
+      <br>
+      <br>
+      <br>
+      <div class="col-md-3"></div>
+      <div class="col-md-6">
+        <h5><span class="badge badge-secondary">{{ quantidade }}  </span> - Agendamento(s) Finalizado(s) no período</h5>
+        <h5><span class="badge badge-secondary">R$ {{ soma_valores }}</span> - Valor Total do período</h5>
+        <br>
+        <hr>
+        <br>
+        <h5><span class="badge badge-secondary">{{ quantidade_total }}  </span> - Total de Agendamentos Finalizados</h5>
+        <h5><span class="badge badge-secondary">R$ {{ valor_total }}</span> - Valor Total</h5>
+    </div>
+    </div>
+    
+
+
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block 'title' %} Editar Agendamento {% endblock %}
+
+{% block 'body' %}
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Confirma a Exclusão ?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+            <div style="text-align: center" class="modal-body">
+                <a class="btn btn-danger btn-sm" href="{% url 'excluir_agendamento' agendamento.id %}">Excluir</a>
+            </div>
+      </div>
+    </div>
+  </div>
+
+<div class="container">
+    <div style="text-align: center">
+        <br>
+
+        <h2>Editar Agendamento</h2>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert {{message.tags}}">{{message}}</div>
+            {% endfor %}
+        {% endif %}
+
+    </div>
+    <br>
+    <form action="{% url 'editar_agendamento' agendamento.id %}" method="POST" >{% csrf_token %}
+        <label>Data do Agendamento:</label>
+        <input style="width: 30%" type="datetime-local" class="form-control" name="data" value="{{ data_formatada }}">
+        <br>
+        <label>Serviço:</label>
+        <br>
+        <select name="servicos" multiple class="form-select">
+            {% for servico in servicos %}
+                {% if servico in agendamento.servico.all %}
+                    <option value="{{ servico.id }}" selected>{{ servico.descricao }} - R${{ servico.valor }}</option>
+                {% else %}
+                    <option value="{{ servico.id }}">{{ servico.descricao }} - R${{ servico.valor }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <br>
+        <br>
+        <input class="btn btn-success btn-sm" type="Submit" value="Salvar">&nbsp&nbsp&nbsp
+        <a href="{% url 'agendamentos' %}" class="btn btn-primary btn-sm">Cancelar</a>&nbsp&nbsp&nbsp
+        {% if user.is_superuser %}
+            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal">
+                Excluir
+            </button>
+        {% endif %}
+    </form>
+</div>
+
+{% endblock %}

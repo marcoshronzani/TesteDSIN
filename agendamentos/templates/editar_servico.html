@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block 'title' %} Editar Servico {% endblock %}
+
+{% block 'body' %}
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Confirma a Exclusão ?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div style="text-align: center" class="modal-body">
+            <a class="btn btn-danger btn-sm" href="{% url 'excluir_servico' servico.id %}">Excluir</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="container">
+    <div style="text-align: center">
+        <br>
+
+        <h2>Editar Serviço</h2>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert {{message.tags}}">{{message}}</div>
+            {% endfor %}
+        {% endif %}
+
+    </div>
+    <br>
+    <form action="{% url 'editar_servico' servico.id %}" method="POST" >{% csrf_token %}
+        <label>Descrição:</label>
+        <input style="width: 50%" type="text" name="descricao" class="form-control" placeholder="Digite a descrição" value="{{ servico.descricao }}">
+        <br>
+        <label>Valor:</label>
+        <input style="width: 10%" type="text" name="valor" class="form-control" value="{{ servico.valor }}">
+        <br>
+        <br>
+        <input class="btn btn-success btn-sm" type="Submit" value="Salvar">&nbsp&nbsp&nbsp
+        <a href="{% url 'servicos' %}" class="btn btn-primary btn-sm">Cancelar</a>&nbsp&nbsp&nbsp
+        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal">
+            Excluir
+        </button>
+    </form>
+</div>
+
+{% endblock %}
